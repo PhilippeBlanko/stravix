@@ -1,0 +1,60 @@
+{
+  "sessions": [
+    {
+      "week": 1,
+      "start_date": "2025-01-05",
+      "end_date": "2025-01-11",
+      "activities": []
+    },
+    {
+      "week": 2,
+      "start_date": "2025-01-12",
+      "end_date": "2025-01-18",
+      "activities": [
+        {
+          "day": "Lundi",
+          "date": "2025-02-17",
+          "distance_km": 3,
+          "completed": false
+        },
+        {
+          "day": "Mercredi",
+          "date": "2025-02-19",
+          "distance_km": 3,
+          "completed": false
+        },
+        {
+          "day": "Samedi",
+          "date": "2025-02-21",
+          "distance_km": 4,
+          "completed": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "start_date": "2025-01-19",
+      "end_date": "2025-01-25",
+      "activities": [
+        {
+          "day": "Lundi",
+          "date": "2025-02-24",
+          "distance_km": 5,
+          "completed": false
+        },
+        {
+          "day": "Mercredi",
+          "date": "2025-02-26",
+          "distance_km": 6,
+          "completed": false
+        },
+        {
+          "day": "Samedi",
+          "date": "2025-02-28",
+          "distance_km": 7,
+          "completed": false
+        }
+      ]
+    }
+  ]
+}
