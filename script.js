@@ -46,7 +46,7 @@ function generateSessions(data) {
             </div>
             <div>
               <h3 class="font-medium">${activity.day}</h3>
-              <p class="text-sm text-gray-500">${activity.distance_km} km</p>
+              <p class="text-sm text-gray-500">${activity.distance_km} km (${convertirKmEnMiles(activity.distance_km)} mi)</p>
             </div>
           </div>
           <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" ${getActivityStatus(session.week, activity.day) ? 'checked' : ''}>
@@ -171,6 +171,13 @@ function getStatusValue(status) {
     default:
       return { color: 'gray', label: 'Inconnu' };
   }
+}
+
+// Fonction pour obtenir la distance kilomètre en milles,
+function convertirKmEnMiles(km) {
+  const conversionFacteur = 0.621371;
+  const miles = km * conversionFacteur;
+  return parseFloat(miles.toFixed(2));
 }
 
 // Fonction pour récupérer les données depuis le fichier JSON
