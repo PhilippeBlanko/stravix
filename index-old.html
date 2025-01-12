@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+<div class="container mx-auto p-6">
+    <!-- Titre principal -->
+    <h1 class="text-3xl font-bold text-left mb-4">Stravix</h1>
+
+    <!-- Barre de navigation des semaines -->
+    <div class="flex justify-between mb-6">
+        <button id="prevWeek" class="bg-gray-200 px-4 py-2 rounded-md text-gray-600 hover:bg-gray-300">Semaine Précédente</button>
+        <button id="nextWeek" class="bg-gray-200 px-4 py-2 rounded-md text-gray-600 hover:bg-gray-300">Semaine Suivante</button>
+    </div>
+
+    <!-- Bloc de la barre de progression -->
+    <div class="bg-white shadow-lg rounded-lg p-4 mb-6">
+        <!-- Titre de la barre de progression -->
+        <h3 class="text-xl font-semibold text-left mb-4">Progrès de l'entraînement</h3>
+
+        <!-- Barre de progression -->
+        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+            <!-- Progression dynamique -->
+            <div id="progressBar" class="w-100 bg-blue-500 h-2 rounded-full"></div>
+        </div>
+
+        <!-- Texte informatif -->
+        <p id="progressText" class="text-left text-sm text-gray-500">100% des entraînements réalisés sur un total de 8 séances.</p>
+    </div>
+
+    <!-- Bloc des semaines -->
+    <div id="weekBlock" class="bg-white shadow-lg rounded-lg p-6 mb-8">
+        <!-- Contenu de la semaine affichée (modifié dynamiquement via JS) -->
+    </div>
+</div>
+
+<script>
+  // Fonction de conversion de kilomètres en miles
+  function kmToMiles(km) {
+    return (km * 0.621371).toFixed(2); // Conversion km -> miles
+  }
+
+  // Données des semaines
+  const weeks = [
+    {
+      week: 1,
+      date: '2 févr. 2025 - 8 févr. 2025',
+      distance: 10, // distance en km
+      sessions: [
+        { day: 'Lundi', distance: 3, completed: true },
+        { day: 'Mercredi', distance: 3, completed: true },
+        { day: 'Samedi', distance: 4, completed: true }
+      ]
+    },
+    {
+      week: 2,
+      date: '9 févr. 2025 - 15 févr. 2025',
+      distance: 10, // distance en km
+      sessions: [
+        { day: 'Lundi', distance: 3, completed: false },
+        { day: 'Mercredi', distance: 3, completed: false },
+        { day: 'Samedi', distance: 4, completed: false }
+      ]
+    }
+  ];
+
+  let currentWeekIndex = 0;
+
+  function renderWeek(weekIndex) {
+    const week = weeks[weekIndex];
+    const progress = week.sessions.filter(s => s.completed).length / week.sessions.length * 100;
+
+    // Mise à jour de la barre de progression
+    document.getElementById('progressBar').style.width = `${progress}%`;
+    document.getElementById('progressText').textContent = `${progress}% des entraînements réalisés sur un total de ${week.sessions.length} séances.`;
+
+    // Mise à jour du bloc des semaines
+    const weekBlock = document.getElementById('weekBlock');
+    weekBlock.innerHTML = `
+            <div class="text-left">
+                <span class="text-sm text-gray-500">${week.date}</span>
+                <h2 class="text-2xl font-semibold mt-2">Semaine ${week.week}</h2>
+                <span class="text-lg text-gray-600">
+                    ${week.distance} km (${kmToMiles(week.distance)} miles) distance cette semaine
+                </span>
+            </div>
+            <div class="mt-6">
+                ${week.sessions.map(session => `
+                    <div class="flex justify-between items-center py-2 border-b ${session.completed ? 'bg-green-100' : ''}">
+                        <p class="text-lg">${session.day} - ${session.distance} km (${kmToMiles(session.distance)} miles)</p>
+                        <input type="checkbox" class="h-5 w-5 text-blue-500 focus:ring-0" ${session.completed ? 'checked' : ''} disabled>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+  }
+
+  document.getElementById('prevWeek').addEventListener('click', () => {
+    if (currentWeekIndex > 0) {
+      currentWeekIndex--;
+      renderWeek(currentWeekIndex);
+    }
+  });
+
+  document.getElementById('nextWeek').addEventListener('click', () => {
+    if (currentWeekIndex < weeks.length - 1) {
+      currentWeekIndex++;
+      renderWeek(currentWeekIndex);
+    }
+  });
+
+  // Initialisation
+  renderWeek(currentWeekIndex);
+</script>
+</body>
+</html>
